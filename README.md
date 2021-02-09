@@ -1,4 +1,4 @@
-# RestaurauntAR
+# RestaurantAR
 ## Team Members
 - Nicholas Aksamit
 - Michael Missana
