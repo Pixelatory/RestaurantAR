@@ -8,7 +8,7 @@
 - Shivam Garg/Tyger Mascarenhus
 - Paramvir Singh
 
-##Get Started
+## Get Started
 - Use /git clone https://github.com/Pixelatory/RestaurantAR/
 - Open directory in terminal
 - Use /npm install command
