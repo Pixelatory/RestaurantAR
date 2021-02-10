@@ -8,7 +8,11 @@
 - Shivam Garg/Tyger Mascarenhus
 - Paramvir Singh
 
-## Get Started
+### Documents
+- [Project Proposal](https://github.com/Pixelatory/RestaurantAR/blob/main/Documents/Project%20Proposal.pdf)
+- [Software Requirements Specification and Designs](https://github.com/Pixelatory/RestaurantAR/blob/main/Documents/Software%20Requirements%20Specification%20and%20Design.pdf)
+
+### Get Started
 - Use /git clone https://github.com/Pixelatory/RestaurantAR/
 - Open directory in terminal
 - Use /npm install command
