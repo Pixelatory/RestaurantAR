@@ -7,3 +7,6 @@
 - Fahad Ansar
 - Shivam Garg/Tyger Mascarenhus
 - Paramvir Singh
+
+### QR code generation Library for react native
+https://github.com/rishichawda/react-native-qrcode-generator
