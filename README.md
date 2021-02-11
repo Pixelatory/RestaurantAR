@@ -18,5 +18,11 @@
 - Use /npm install command
 - Use /npm start command
 
+### AR Libraries for React Native
+- [JSAR Kit](https://github.com/kig/JSARToolKit)
+- [AR Core](https://developers.google.com/ar)
+- [ARuco](https://github.com/jcmellado/js-aruco)
+
+
 ### QR code generation Library for react native
 https://github.com/rishichawda/react-native-qrcode-generator
