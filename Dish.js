@@ -11,8 +11,7 @@ const Dish = props => {
             </View>
 
             <View>
-            <Text style={{fontSize:15, color: 'black',}}>{props.info}</Text>
-               
+                <Text style={{fontSize:15, color: 'black',}}>{props.info}</Text>
             </View>
 
         </View>
@@ -36,8 +35,6 @@ const styles = StyleSheet.create({
         width: '100%',
     },
 
-
 });
-
 
 export default Dish;
