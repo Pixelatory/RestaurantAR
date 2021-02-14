@@ -18,5 +18,23 @@
 - Use /npm install command
 - Use /npm start command
 
-
-
+### 'externalss.js' StyleSheet instructions
+- 'externals.js' can be added to a file by adding following line at the top
+      import external from './externalss';
+      
+- Have created some basic variables used all over the file such as
+    <u>Primary</u> for primary color of the app
+    <u>Secondary</u> for secondary color of the app
+    <u>BtnTextColor</u> for text color inside buttons
+    <u>TextColorNormal</u> for all the basic text
+    <u>TextColorSpecial</u> for all the special texts
+  
+- using each style, inside the opening tag you wish to apply the style insert
+    style = {external.<style name here>}
+  
+- Styles in 'externalss.js'
+    - styles
+    - buttonStyle
+    - headings
+    - subheadings
+    - texts
