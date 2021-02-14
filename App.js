@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import {Text, View } from 'react-native';
 
+
 import external from './externalss';
 import SplashScreen from './SplashScreen';
 

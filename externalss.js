@@ -31,19 +31,19 @@ const external = StyleSheet.create({
     headings:{
       fontFamily: "sans-serif",
       color: TextColorNormal,
-      fontsize: 22,
+      fontSize: 22,
     },
 
     subHeadings:{
       fontFamily: "sans-serif",
       color: TextColorNormal,
-      fontsize: 18,
+      fontSize: 18,
     },
 
     texts:{
       fontFamily: "sans-serif",
       color: TextColorNormal,
-      fontsize: 10,
+      fontSize: 10,
     }
 
 });
