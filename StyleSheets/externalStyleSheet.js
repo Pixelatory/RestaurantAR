@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet} from 'react-native';
 
 //colors of the app
 var { Primary } = '#fff'; 
@@ -8,45 +8,92 @@ var { BtnTextColor } = '#000';
 var { TextColorNormal } = '#111';
 var { TextColorSpecial } = '#111';
 
+const styles = StyleSheet.create({
+ 
+    // App
+    main: {
+		flex: 1,
+		justifyContent: 'space-between',	
+	},
 
+	dishContainer:{
+		alignItems: 'center',
+	},
 
-const external = StyleSheet.create({
+	dish:{
+		fontSize: 56,
+	},
 
-    styles: {
-      flex: 1,
-      backgroundColor: Primary,
-      color: TextColorNormal,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },  
-
-    buttonStyle: {
-      backgroundColor: Secondary,
-      color: BtnTextColor,
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderRadius:10,
+    
+    // Dish
+    dishContainer: {
+        height: 65,
+        paddingHorizontal: 10,
+        borderWidth: 1,
+        borderColor: '#f0f0f0',
     },
 
-    headings:{
-      fontFamily: "sans-serif",
-      color: TextColorNormal,
-      fontSize: 22,
+    dishNameLogo:{
+        flexDirection: 'row',
     },
 
-    subHeadings:{
-      fontFamily: "sans-serif",
-      color: TextColorNormal,
-      fontSize: 18,
+    tapLogo: {
+        width: 15, 
+        height: 15,
+        paddingTop: 10,
     },
 
-    texts:{
-      fontFamily: "sans-serif",
-      color: TextColorNormal,
-      fontSize: 10,
+    dishName: {
+        flex: 10,
+        fontSize:20, 
+        fontWeight: 'bold',
+        color: 'black', 
+    },
+
+    dishInfo:{
+        fontSize:15, 
+        color: 'black', 
+    },
+
+    nameAndCost: {
+        justifyContent: 'space-between',
+        width: '100%',
+    },
+
+
+    // Menu
+    topNav: {
+        flexDirection: 'row',
+    },
+
+    searchBar: {
+        flex: 1,
+        margin: 5,
+        paddingHorizontal: 15,
+        height: 40,
+        fontSize: 18,
+        borderWidth: 1.5,
+        borderRadius:150,
+        backgroundColor: "#F0F0F0",
+        borderColor: "#F09133",
+    },
+
+  
+    // Banner
+    header: {
+        width: '100%',
+        borderWidth: 1,
+        height: 16,
+        padding: 24, 
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+
+    headerTitle: {
+        color: 'black',
+        fontSize: 18
     }
 
 });
 
-  
-export default external
+export default styles;
