@@ -1,5 +1,6 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View, SafeAreaView } from 'react-native';
+import Login from './Login';
 
 import Banner from './Components/Banner';
 import Menu from './Components/Menu'
@@ -16,9 +17,9 @@ export default function App() {
 
 		<View style={styles.main}>
 
-			<Menu/>
-
-			<Banner title="TAP DISH TO VIEW 3D MODEL"/>
+			<SafeAreaView style={{flex:1}}>
+				<Login/>
+			</SafeAreaView>
 
 		</View>
 
