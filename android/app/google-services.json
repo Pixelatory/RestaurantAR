@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "93178802929",
+    "project_id": "restaurantar-70057",
+    "storage_bucket": "restaurantar-70057.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:93178802929:android:f260ff82a6ade12a7e6f50",
+        "android_client_info": {
+          "package_name": "com.projar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "93178802929-eed45agapjp5r6cvq6ohl9dvpmd58e0m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.projar",
+            "certificate_hash": "8ba1baff1ae939839c87645429190d4e10472bbf"
+          }
+        },
+        {
+          "client_id": "93178802929-rs18nu0t7q68v2td62bk49omlef52355.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.projar",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "93178802929-67lv8cmvdg69u7nut510iokuo1dgok0u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-D-khMo-IQW1yECi3LmxW-u2mz1_he_c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "93178802929-67lv8cmvdg69u7nut510iokuo1dgok0u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
