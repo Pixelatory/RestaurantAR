@@ -5,7 +5,10 @@ import Banner from './Components/Banner';
 import Category from './Components/Category'
 import SearchBar from './Components/SearchBar'
 
+
+
 export default function App() {
+
 
 	const entrees = [
 		{name: "Butter Chicken", info: "dfdsf sdf sdf dsf dsf ddf dsf dsf dfd df dsjfdskjfd vjlv bj ksdjfklds fdsf ", cost: "$5.99"},
@@ -27,10 +30,10 @@ export default function App() {
 	];
 
 
+
 	return (
 
 		<View style={styles.main}>
-
 			<SearchBar/>
 
 			<ScrollView>
@@ -39,7 +42,7 @@ export default function App() {
 				<Category title="Pizza" dishes={pizza}/>
 			</ScrollView>
 
-			<Banner title="TAP DISH TO VIEW 3D MODEL" />
+			<Banner title="TAP DISH TO VIEW 3D MODEL"/>
 
 		</View>
 
