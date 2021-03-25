@@ -21,6 +21,9 @@ const FullItem = props => {
         empty: require('../assets/emptyStar.png'),
     };
 
+	function formatNumber(num) {
+		return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+	}
 
 	return(
 
@@ -34,7 +37,7 @@ const FullItem = props => {
 			<View style={styles.ratingContainer}>
 
 				<View>
-					<Text style={styles.ratingNum}>4.3</Text>
+					<Text style={styles.ratingNum}>{props.rating}</Text>
 					<View style={styles.ratingStars}>
 						<Image style={styles.starImageStyle} source = {props.stars[0]?starImages.full:starImages.empty} />
 						<Image style={styles.starImageStyle} source = {props.stars[1]?starImages.full:starImages.empty} />
@@ -42,14 +45,15 @@ const FullItem = props => {
 						<Image style={styles.starImageStyle} source = {props.stars[3]?starImages.full:starImages.empty} />
 						<Image style={styles.starImageStyle} source = {props.stars[4]?starImages.full:starImages.empty} />
 					</View>
+					<Text style={{textAlign: 'center'}}>{formatNumber(props.timesRated)}</Text>
 				</View>
 
 				<View style={styles.expandedRating}>
-					<ProgressBar progress={0.65} color={Colors.deepOrangeA100}/>	
-					<ProgressBar progress={0.10} color={Colors.deepOrangeA100}/>		
-					<ProgressBar progress={0.05} color={Colors.deepOrangeA100}/>	
-					<ProgressBar progress={0.05} color={Colors.deepOrangeA100}/>			
-					<ProgressBar progress={0.15} color={Colors.deepOrangeA100}/>					
+					<ProgressBar progress={props.ratingDist[0]} color={Colors.deepOrangeA100}/>	
+					<ProgressBar progress={props.ratingDist[1]} color={Colors.deepOrangeA100}/>		
+					<ProgressBar progress={props.ratingDist[2]} color={Colors.deepOrangeA100}/>	
+					<ProgressBar progress={props.ratingDist[3]} color={Colors.deepOrangeA100}/>			
+					<ProgressBar progress={props.ratingDist[4]} color={Colors.deepOrangeA100}/>					
 				</View>
 
 			</View>
