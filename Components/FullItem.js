@@ -8,8 +8,9 @@ import {
   Text,
   View,
   Button,
-  TouchableOpacity,
 } from 'react-native';
+
+import { ProgressBar, Colors } from 'react-native-paper';
 
 import UserComment from './UserComment'
 
@@ -20,6 +21,9 @@ const FullItem = props => {
         empty: require('../assets/emptyStar.png'),
     };
 
+	function formatNumber(num) {
+		return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+	}
 
 	return(
 
@@ -30,15 +34,30 @@ const FullItem = props => {
 			</View>
 
 
-			<TouchableOpacity style={styles.rating}>
-                <Image style={styles.starImageStyle} source = {props.stars[0]?starImages.full:starImages.empty} />
-                <Image style={styles.starImageStyle} source = {props.stars[1]?starImages.full:starImages.empty} />
-                <Image style={styles.starImageStyle} source = {props.stars[2]?starImages.full:starImages.empty} />
-                <Image style={styles.starImageStyle} source = {props.stars[3]?starImages.full:starImages.empty} />
-                <Image style={styles.starImageStyle} source = {props.stars[4]?starImages.full:starImages.empty} />
-				<Text>{'('+props.timesRated+')'}</Text> 
-			</TouchableOpacity>
-		
+			<View style={styles.ratingContainer}>
+
+				<View>
+					<Text style={styles.ratingNum}>{props.rating}</Text>
+					<View style={styles.ratingStars}>
+						<Image style={styles.starImageStyle} source = {props.stars[0]?starImages.full:starImages.empty} />
+						<Image style={styles.starImageStyle} source = {props.stars[1]?starImages.full:starImages.empty} />
+						<Image style={styles.starImageStyle} source = {props.stars[2]?starImages.full:starImages.empty} />
+						<Image style={styles.starImageStyle} source = {props.stars[3]?starImages.full:starImages.empty} />
+						<Image style={styles.starImageStyle} source = {props.stars[4]?starImages.full:starImages.empty} />
+					</View>
+					<Text style={{textAlign: 'center'}}>{formatNumber(props.timesRated)}</Text>
+				</View>
+
+				<View style={styles.expandedRating}>
+					<ProgressBar progress={props.ratingDist[0]} color={Colors.deepOrangeA100}/>	
+					<ProgressBar progress={props.ratingDist[1]} color={Colors.deepOrangeA100}/>		
+					<ProgressBar progress={props.ratingDist[2]} color={Colors.deepOrangeA100}/>	
+					<ProgressBar progress={props.ratingDist[3]} color={Colors.deepOrangeA100}/>			
+					<ProgressBar progress={props.ratingDist[4]} color={Colors.deepOrangeA100}/>					
+				</View>
+
+			</View>
+			
 
 			<View style={styles.desc}>
 				<Text>It is made with basmati rice, spices and goat meat. Popular variations use chicken instead of goat meat. There are various forms of Hyderabadi biryani. </Text>
@@ -80,13 +99,32 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 
-	rating:{
-		flex: 0.3,
+	ratingContainer:{
 		flexDirection: 'row',
-		alignItems: 'center',
-		justifyContent: 'space-evenly',
-		paddingHorizontal: 100,
-		
+		padding:10, 
+	},
+
+	ratingNumStars:{
+		alignContent: 'center',
+	},
+
+	ratingNum:{
+		fontSize: 36, 
+		textAlign: 'center', 
+		color: "#FF9933", 
+		fontWeight: 'bold'
+	},	
+
+	ratingStars:{
+		flexDirection: 'row',
+		justifyContent: 'space-evenly',	
+		padding: 10,
+	},
+
+	expandedRating:{
+		flex: 1,
+		padding: 5,
+		justifyContent: 'space-evenly',	
 	},
 
 	starImageStyle: {
