@@ -34,6 +34,16 @@ export default function App() {
 		setuserInfo(user);
 		console.log(user);
 		if (user) setloggedIn(true);
+		if (user) {
+			auth().currentUser.getIdToken(/* forceRefresh */ true).then((idToken) => {
+			  // Send token to your backend via HTTPS
+			  // ...
+			  console.log(idToken);
+			  console.log("wow");
+			}).catch(function(error) {
+			  // Handle error
+			});
+		}
 	}
 	
 	async function onFacebookButtonPress() {
@@ -59,7 +69,7 @@ export default function App() {
 		return auth().signInWithCredential(facebookCredential);
 	}
 	
-	signIn = async() => {
+	async function onGoogleButtonPress() {
 		try {
 		  await GoogleSignin.hasPlayServices();
 		  const {accessToken, idToken} = await GoogleSignin.signIn();
@@ -75,7 +85,7 @@ export default function App() {
 		}
 	};
 	
-	const signOut = async () => {
+	async function onSignOutButtonPress() {
 		try {
 		  auth().signOut().then(() => console.log('User signed out!'));
 		  setloggedIn(false);
@@ -92,11 +102,11 @@ export default function App() {
 		style={{width: 192, height: 48}}
 		size={GoogleSigninButton.Size.Wide}
 		color={GoogleSigninButton.Color.Dark}
-		onPress={signIn}
+		onPress={onGoogleButtonPress}
 	/>)}
 	
 	{!loggedIn && (<TouchableOpacity onPress={() => onFacebookButtonPress().then(() => console.log('Signed in with Facebook!'))}><Text>Facebook Login</Text></TouchableOpacity>)}
-	{loggedIn && (<TouchableOpacity onPress={signOut}><Text>Log out</Text></TouchableOpacity>)}
+	{loggedIn && (<TouchableOpacity onPress={onSignOutButtonPress}><Text>Log out</Text></TouchableOpacity>)}
 	</View>
   );
 	
