@@ -29,8 +29,9 @@ PushNotification.configure({
     console.log("TOKEN:", token);
     },
     onNotification: function (notification) {
-    console.log("NOTIFICATION:", notification);		
-    // notification.finish(PushNotificationIOS.FetchResult.NoData);   // iOS Related Stuff  
+      // Add stuff here to do when notification is selected
+
+      notification.finish(PushNotificationIOS.FetchResult.NoData);   // iOS Related Stuff  
     // },
     // onAction: function (notification) {
     // console.log("ACTION:", notification.action);
