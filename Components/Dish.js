@@ -12,7 +12,7 @@ const Dish = dish => {
                 <Image source={require('../assets/food-plate.png')} style={styles.tapLogo}/>
             </View>
         
-            <Text style={styles.dishInfo}>{dish.info}</Text>
+            <Text numberOfLines={2} style={styles.dishInfo}>{dish.info}</Text>
         
         </View>
     );

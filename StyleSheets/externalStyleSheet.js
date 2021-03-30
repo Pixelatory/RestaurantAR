@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
 
     dishInfo:{
         fontSize:15, 
-        color: 'black', 
+        color: 'black',
     },
 
     nameAndCost: {
