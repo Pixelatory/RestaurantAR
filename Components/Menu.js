@@ -1,56 +1,87 @@
-import React, { version } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import React, {Component} from 'react';
+import {View, TextInput, Text, StyleSheet, ScrollView} from 'react-native';
 
-import Banner from './Banner';
-import Dish from './Dish';
+import Dish from './Dish'
 
-export default function App() {
+import styles from '../StyleSheets/externalStyleSheet';
 
-	const foodItems = [
-		{name: "Ice-Cream", info: "dfdsf sdf sdf dsf dsf ddf dsf dsf dfd df dsjfdskjfd vjlv bj ksdjfklds fdsf ", cost: "$5.99"},
-		{name: "Biryani", info: "dfdsf sdf sdf dsf dsf ddf dsf dsf dfd df dsjfdskjfd vjlv bj ksdjfklds fdsf ", cost: "$6.99"},
-		{name: "NY Pizza", info: "dfdsf sdf sdf dsf dsf ddf dsf dsf dfd df dsjfdskjfd vjlv bj ksdjfklds fdsf ", cost: "$4.99"},
-		{name: "Burger", info: "dfdsf sdf sdf dsf dsf ddf dsf dsf dfd df dsjfdskjfd vjlv bj ksdjfklds fdsf ", cost: "$9.99"},
-		{name: "Pop", info: "dfdsf sdf sdf dsf dsf ddf dsf dsf dfd df dsjfdskjfd vjlv bj ksdjfklds fdsf ", cost: "$2.59"},
-		{name: "Chicken Tenders", info: "dfdsf sdf sdf dsf dsf ddf dsf dsf dfd df dsjfdskjfd vjlv bj ksdjfklds fdsf ", cost: "$7.99"},
-		{name: "Water", info: "dfdsf sdf sdf dsf dsf ddf dsf dsf dfd df dsjfdskjfd vjlv bj ksdjfklds fdsf ", cost: "$0.99"},
-	];
+class Menu extends Component {
+  state = {
+    search: '',
+  };
+
+  filterList(list) {
+    return list.filter(
+      (listItem) =>
+        listItem.name
+          .toLowerCase()
+          .includes(this.state.search.toLowerCase()) ||
+        listItem.name.toLowerCase().includes(this.state.search.toLowerCase()),
+    );
+  }
+  
+  render() {
+
+    const entrees = [
+      {name: "Butter Chicken", info: "Food is any substance consumed to provide nutritional support for an organism. ", cost: "$5.99"},
+      {name: "Palak Paneer", info: "Food is any substance consumed to provide nutritional support for an organism. ", cost: "$6.99"},
+      {name: "Rogan Josh", info: "Food is any substance consumed to provide nutritional support for an organism. ", cost: "$4.99"},
+      {name: "Spicy Prok Vindaloo", info: "Food is any substance consumed to provide nutritional support for an organism. ", cost: "$9.99"},
+    ];
+  
+    const starters = [
+      {name: "Indian Onion", info: "Food is any substance consumed to provide nutritional support for an organism. ", cost: "$5.99"},
+      {name: "Veg Kabab", info: "Food is any substance consumed to provide nutritional support for an organism. ", cost: "$6.99"},
+      {name: "Paneer 65", info: "Food is any substance consumed to provide nutritional support for an organism. ", cost: "$4.99"},
+    ];
+  
+    const pizza = [
+      {name: "Chicago Pizza", info: "Food is any substance consumed to provide nutritional support for an organism. ", cost: "$5.99"},
+      {name: "New York Piza", info: "Food is any substance consumed to provide nutritional support for an organism. ", cost: "$6.99"},
+      {name: "Gree Pizza", info: "Food is any substance consumed to provide nutritional support for an organism. ", cost: "$4.99"},
+    ];
+
+    return (
+
+      <ScrollView >
+
+        <View style={styles.topNav}>
+        <TextInput placeholder='Search' onChangeText={(search) => this.setState({search})} style={styles.searchBar}/>
+        </View>
+
+        <Text style={{fontSize: 30, fontWeight: 'bold', padding: 5, backgroundColor: '#f0f0f0', borderWidth: 0.175}}>Entrees</Text>
+        <View>
+          {this.filterList(entrees).map((listItem) => (
+            <View key={listItem.name} >
+              <Dish name={listItem.name} info={listItem.info} cost={listItem.cost}/>
+            </View>
+          ))}
+        </View>
+
+        <Text style={{fontSize: 30, fontWeight: 'bold', padding: 5, backgroundColor: '#f0f0f0', borderWidth: 0.175}}>Starters</Text>
+        <View>
+          {this.filterList(starters).map((listItem) => (
+            <View key={listItem.name} >
+              <Dish name={listItem.name} info={listItem.info} cost={listItem.cost}/>
+            </View>
+          ))}
+        </View>
+
+        <Text style={{fontSize: 30, fontWeight: 'bold', padding: 5, backgroundColor: '#f0f0f0', borderWidth: 0.175}}>Pizza</Text>
+        <View>
+          {this.filterList(pizza).map((listItem) => (
+            <View key={listItem.name} >
+              <Dish name={listItem.name} info={listItem.info} cost={listItem.cost}/>
+            </View>
+          ))}
+        </View>
+
+      </ScrollView>
 
 
-	return (
-		<View style={styles.main}>
-
-			<Banner title="MENU" />
-
-			<ScrollView>
-				{foodItems.map(entry => (
-					<View key={entry.name} style={styles.dishContainer}>
-						<Dish name={entry.name} info={entry.info} cost={entry.cost}/>
-					</View>
-				))}
-			</ScrollView>
-
-			<Banner title="TAP DISH TO VIEW 3D MODEL" />
-
-		</View>
-	);
+    );
+  }
 }
 
-const styles = StyleSheet.create({
 
-	main: {
-		flex: 1,
-		justifyContent: 'space-between',	
-	},
-
-
-	dishContainer:{
-		alignItems: 'center',
-	},
-
-	dish:{
-		fontSize: 56,
-	}
-
-
-});
+export default Menu;
