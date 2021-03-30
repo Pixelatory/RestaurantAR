@@ -8,11 +8,6 @@ import styles from './StyleSheets/externalStyleSheet';
 
 
 export default function App() {
-
-	
-
-
-
 	return (
 
 		<View style={styles.main}>
