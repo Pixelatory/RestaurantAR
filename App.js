@@ -6,21 +6,12 @@ import Menu from './Components/Menu'
 
 import styles from './StyleSheets/externalStyleSheet';
 
+import FullItemScreen from './Components/FullItemScreen';
 
 export default function App() {
 
-	
-
-
 	return (
-
-		<View style={styles.main}>
-
-			<Menu/>
-
-			<Banner title="TAP DISH TO VIEW 3D MODEL"/>
-
-		</View>
-
+		<FullItemScreen/>
 	);
+	
 }
