@@ -1,29 +1,62 @@
-import React from 'react';
+import React, {Component} from 'react';
 
 import FullItem from './FullItem'
 
-const FullItemScreen = () => {
+class FullItemScreen extends Component {
+	
+  constructor(props) {
+    super(props);
+  }
+  
+  state = {
+	reviews: null,
+	stars: null,
+	desc: "",
+  };
+  
+  componentDidMount() {
+    fetch('http://159.203.3.150/api/reviews/' + this.props.dishId)
+	.then(res => res.json())
+	.then(json => this.setState({reviews: json.response, stars: json.stars, desc: json.desc[0].dish_description}))
+	.catch(err => console.log(err));
+  }
+  
+  render() {
+  console.log(this.state.reviews);
+	  
+  var userComments = [];
+  var description = "";
+  
+  if(this.state.reviews) {
+    this.state.reviews.map((review) => {
+	 userComments.push({name: review.user_full_name,
+	 comment: review.review_comment});
+	});
+  }
+  
+  var foodRating = 0;
 
-  var foodRating = 3.3
-  const stars = [0,0,0,0,0]
+  if(this.state.stars)
+    foodRating = this.state.stars.reduce((a,v,i) =>  a = a + (v * (i + 1)), 0) / this.state.stars.reduce((a,v) =>  a = a + v, 0);
+  
+  const stars = [0,0,0,0,0];
   
   for(var i = 0; i<parseInt(foodRating); i++){
-    stars[i] = 1
+    stars[i] = 1;
   }
 
-  var timesRated = 1433
+  var timesRated = 0;
+  
+  if(this.state.stars)
+    timesRated = this.state.stars.reduce((a,v) =>  a = a + v, 0);
 
-  const ratingDistribution = [0.65, 0.10, 0.5, 0.5, 0.15]
-
-  const userComments = [
-		{name: "Paramvir", comment:"It is made with basmati rice, spices and goat meat. Popular variations use chicken instead of goat meat. There are various forms of Hyderabadi biryani. ", date: (new Date()).toDateString()},
-		{name: "Fahad", comment:"It is made with basmati rice, spices and goat meat. Popular variations use chicken instead of goat meat. There are various forms of Hyderabadi biryani. ", date: (new Date()).toDateString()},
-		{name: "Tyger", comment:"It is made with basmati rice, spices and goat meat. Popular variations use chicken instead of goat meat. There are various forms of Hyderabadi biryani. ", date: (new Date()).toDateString()},
-		{name: "Nick", comment:"It is made with basmati rice, spices and goat meat. Popular variations use chicken instead of goat meat. There are various forms of Hyderabadi biryani. ", date: (new Date()).toDateString()},
-		{name: "Michael", comment:"It is made with basmati rice, spices and goat meat. Popular variations use chicken instead of goat meat. There are various forms of Hyderabadi biryani. ", date: (new Date()).toDateString()},
-		{name: "Jello", comment:"It is made with basmati rice, spices and goat meat. Popular variations use chicken instead of goat meat. There are various forms of Hyderabadi biryani. ", date: (new Date()).toDateString()},
-		{name: "KJ", comment:"It is made with basmati rice, spices and goat meat. Popular variations use chicken instead of goat meat. There are various forms of Hyderabadi biryani. ", date: (new Date()).toDateString()},
-	]
+  const ratingDistribution = [0, 0, 0, 0, 0];
+  
+  if(this.state.stars) {
+    for(var i = 0; i < 5; i++) {
+      ratingDistribution[i] = this.state.stars[i] / this.state.stars.reduce((a,v) =>  a = a + v, 0);
+    }
+  }
 
   return (
     
@@ -33,10 +66,11 @@ const FullItemScreen = () => {
 		rating={foodRating}
 		timesRated={timesRated}
 		ratingDist={ratingDistribution}
-		userInfo = {userComments}
+		userInfo={userComments}
+		desc={this.state.desc}
 	/>
     
-  );
+  )};
 };
 
 

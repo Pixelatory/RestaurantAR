@@ -11,7 +11,7 @@ import FullItemScreen from './Components/FullItemScreen';
 export default function App() {
 
 	return (
-		<FullItemScreen/>
+		<FullItemScreen dishId='0'/>
 	);
 	
 }

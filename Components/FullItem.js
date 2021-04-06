@@ -58,24 +58,23 @@ const FullItem = props => {
 
 			</View>
 			
+            <ScrollView>
+			  <View style={styles.desc}>
+				<Text>{props.desc}</Text>
+			  </View>
 
-			<View style={styles.desc}>
-				<Text>It is made with basmati rice, spices and goat meat. Popular variations use chicken instead of goat meat. There are various forms of Hyderabadi biryani. </Text>
-			</View>
 
-
-			<View style={styles.notification}>
+			  <View style={styles.notification}>
 				<Button style={styles.notiButton} title='Tap here to get notification later' color="#FF9933"/>
-			</View>
+			  </View>
 
 			
-			<ScrollView style={styles.comments}>
-                <View>
-                    {props.userInfo.map((listItem) => (
-                        <View key={listItem.name} >
-                            <UserComment name={listItem.name} comment={listItem.comment} date={listItem.date}/>
-                        </View>
-                    ))}
+              <View>
+                {props.userInfo.map((listItem) => (
+                  <View key={listItem.name} >
+                    <UserComment name={listItem.name} comment={listItem.comment} date={listItem.date}/>
+                  </View>
+                ))}
                 </View>
 			</ScrollView>
 			
@@ -134,7 +133,6 @@ const styles = StyleSheet.create({
 	},
 
 	desc:{
-		flex: 0.25,
 		alignItems: 'center',
 		padding: 10,
 	},
