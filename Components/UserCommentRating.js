@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import {SafeAreaView, StyleSheet, View, Text, Image, TouchableOpacity,
 } from 'react-native';
 
-const Rating = () => {
+const UserCommentRating = () => {
 
   const [defaultRating, setDefaultRating] = useState(0);
   const [maxRating, setMaxRating] = useState([1, 2, 3, 4, 5]);
@@ -57,7 +57,7 @@ const Rating = () => {
   );
 };
 
-export default Rating;
+export default UserCommentRating;
 
 const styles = StyleSheet.create({
   container: {
