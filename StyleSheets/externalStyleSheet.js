@@ -27,15 +27,24 @@ const styles = StyleSheet.create({
     
     // Dish
     dishContainer: {
-        height: 65,
-        paddingHorizontal: 10,
-        borderWidth: 1,
+        padding: 10,
+        borderTopWidth: 1,
+		borderBottomWidth: 1,
         borderColor: '#f0f0f0',
     },
 
     dishNameLogo:{
         flexDirection: 'row',
     },
+	
+	categoryText: {
+		fontSize: 30, 
+		fontWeight: 'bold', 
+		padding: 8, 
+		backgroundColor: '#f0f0f0', 
+		borderTopWidth: 0.175,
+		borderBottomWidth: 0.175,
+	},
 
     tapLogo: {
         width: 15, 
