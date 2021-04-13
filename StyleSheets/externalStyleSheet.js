@@ -1,108 +1,103 @@
 import React from 'react';
-import { StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 
 //colors of the app
-var { Primary } = '#fff'; 
-var {Secondary } = '#ggg';
-var { BtnTextColor } = '#000';
-var { TextColorNormal } = '#111';
-var { TextColorSpecial } = '#111';
+var {Primary} = '#fff';
+var {Secondary} = '#ggg';
+var {BtnTextColor} = '#000';
+var {TextColorNormal} = '#111';
+var {TextColorSpecial} = '#111';
 
 const styles = StyleSheet.create({
- 
-    // App
-    main: {
-		flex: 1,
-		justifyContent: 'space-between',	
-	},
+  // App
+  main: {
+    flex: 1,
+    justifyContent: 'space-between',
+  },
 
-	dishContainer:{
-		alignItems: 'center',
-	},
+  dishContainer: {
+    alignItems: 'center',
+  },
 
-	dish:{
-		fontSize: 56,
-	},
+  dish: {
+    fontSize: 56,
+  },
 
-    
-    // Dish
-    dishContainer: {
-        padding: 10,
-        borderTopWidth: 1,
-		borderBottomWidth: 1,
-        borderColor: '#f0f0f0',
-    },
+  // Dish
+  dishContainer: {
+    padding: 10,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: '#f0f0f0',
+  },
 
-    dishNameLogo:{
-        flexDirection: 'row',
-    },
-	
-	categoryText: {
-		fontSize: 30, 
-		fontWeight: 'bold', 
-		padding: 8, 
-		backgroundColor: '#f0f0f0', 
-		borderTopWidth: 0.175,
-		borderBottomWidth: 0.175,
-	},
+  dishNameLogo: {
+    flexDirection: 'row',
+  },
 
-    tapLogo: {
-        width: 15, 
-        height: 15,
-        paddingTop: 10,
-    },
+  categoryText: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    padding: 8,
+    backgroundColor: '#f0f0f0',
+    borderTopWidth: 0.175,
+    borderBottomWidth: 0.175,
+  },
 
-    dishName: {
-        flex: 10,
-        fontSize:20, 
-        fontWeight: 'bold',
-        color: 'black', 
-    },
+  tapLogo: {
+    width: 15,
+    height: 15,
+    paddingTop: 10,
+  },
 
-    dishInfo:{
-        fontSize:15, 
-        color: 'black',
-    },
+  dishName: {
+    flex: 10,
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'black',
+  },
 
-    nameAndCost: {
-        justifyContent: 'space-between',
-        width: '100%',
-    },
+  dishInfo: {
+    fontSize: 15,
+    color: 'black',
+  },
 
+  nameAndCost: {
+    justifyContent: 'space-between',
+    width: '100%',
+  },
 
-    // Menu
-    topNav: {
-        flexDirection: 'row',
-    },
+  // Menu
+  topNav: {
+    flexDirection: 'row',
+  },
 
-    searchBar: {
-        flex: 1,
-        margin: 5,
-        paddingHorizontal: 15,
-        height: 40,
-        fontSize: 18,
-        borderWidth: 1.5,
-        borderRadius:150,
-        backgroundColor: "#F0F0F0",
-        borderColor: "#F09133",
-    },
+  searchBar: {
+    flex: 1,
+    margin: 5,
+    paddingHorizontal: 15,
+    height: 40,
+    fontSize: 18,
+    borderWidth: 1.5,
+    borderRadius: 150,
+    backgroundColor: '#F0F0F0',
+    borderColor: '#F09133',
+  },
 
-  
-    // Banner
-    header: {
-        width: '100%',
-        borderWidth: 1,
-        height: 16,
-        padding: 24, 
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
+  // Banner
+  header: {
+    width: '100%',
+    borderWidth: 1,
+    height: 16,
+    padding: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 
-    headerTitle: {
-        color: 'black',
-        fontSize: 18
-    }
-
+  headerTitle: {
+    color: 'black',
+    fontSize: 18,
+  },
 });
 
 export default styles;
