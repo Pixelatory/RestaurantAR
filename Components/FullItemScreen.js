@@ -12,6 +12,8 @@ class FullItemScreen extends Component {
     reviews: null,
     stars: null,
     desc: '',
+    name: null,
+    model: null,
   };
 
   componentDidMount() {
@@ -21,7 +23,9 @@ class FullItemScreen extends Component {
         this.setState({
           reviews: json.response,
           stars: json.stars,
-          desc: json.desc[0].dish_description,
+          desc: json.desc,
+          name: json.name,
+          model: json.model,
         }),
       )
       .catch((err) => console.log(err));
@@ -81,13 +85,14 @@ class FullItemScreen extends Component {
           this.props.close();
         }}>
         <FullItem
-          name="Cheeseburger"
+          name={this.state.name}
           stars={stars}
           rating={foodRating}
           timesRated={timesRated}
           ratingDist={ratingDistribution}
           userInfo={userComments}
           desc={this.state.desc}
+          model={this.state.model}
         />
       </Modal>
     );
