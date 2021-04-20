@@ -13,10 +13,13 @@ import {
   TouchableHighlight,
 } from 'react-native';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import {ProgressBar, Colors} from 'react-native-paper';
 
 import UserComment from './UserComment';
 import YoutubePlayer from 'react-native-youtube-iframe';
+import PushNotification from 'react-native-push-notification';
 
 const FullItem = (props) => {
   const [displayScroll, setDisplayScroll] = useState(false);
@@ -38,6 +41,25 @@ const FullItem = (props) => {
     } else if (props.model.includes('www.youtube.com')) {
       return true;
     }
+  }
+
+  function makeNotification() {
+    PushNotification.localNotificationSchedule({
+      channelId: 'channel-id',
+      message: 'Hey, would you like to leave a review for us?', // (required)
+      date: new Date(Date.now() + 1),
+      id: 521,
+    });
+    const setReviewTime = async () => {
+      try {
+        const jsonValue = JSON.stringify(Date.now() + 1);
+        await AsyncStorage.setItem('reviewTime', jsonValue);
+      } catch (e) {
+        throw e;
+      }
+    };
+
+    setReviewTime();
   }
 
   function getYouTubeId() {
@@ -144,7 +166,10 @@ const FullItem = (props) => {
         </View>
 
         <View style={styles.notification}>
-          <TouchableOpacity style={styles.notiButton} color="#FF9933">
+          <TouchableOpacity
+            style={styles.notiButton}
+            color="#FF9933"
+            onPress={makeNotification}>
             <Text style={styles.buttonText}>Ask me later to review</Text>
           </TouchableOpacity>
         </View>

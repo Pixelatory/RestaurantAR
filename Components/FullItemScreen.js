@@ -78,7 +78,6 @@ class FullItemScreen extends Component {
 
     return (
       <Modal
-        visible={this.props.open}
         animationType="slide"
         presentationStyle="fullScreen"
         onRequestClose={() => {
