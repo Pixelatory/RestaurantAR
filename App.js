@@ -16,15 +16,25 @@ import PushNotification from 'react-native-push-notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ReviewFullScreen from './Components/ReviewFullScreen';
+import LoginScreen from './Components/LoginScreen';
+
+import auth from '@react-native-firebase/auth';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 export default class App extends Component {
   state = {
+    loginScreen: false,
     menuScreen: true,
     fullItemId: null,
     dishes: null,
     categories: null,
     reviewScreen: false,
   };
+
+  constructor(props) {
+    super(props);
+    this.onAuthStateChanged.bind(this);
+  }
 
   // Fetch the dish and categories data from DB; set JSON response to state
   componentDidMount() {
@@ -37,6 +47,18 @@ export default class App extends Component {
       .then((res) => res.json())
       .then((json) => this.setState({categories: json.response}))
       .catch((err) => console.log(err));
+
+    GoogleSignin.configure({
+      webClientId:
+        '93178802929-67lv8cmvdg69u7nut510iokuo1dgok0u.apps.googleusercontent.com',
+      offlineAccess: false,
+    });
+
+    const unsubscribe = auth().onAuthStateChanged((user) => {
+      this.onAuthStateChanged(user);
+    });
+
+    this.setState({user: auth().currentUser});
 
     const checkIfReviewTime = async () => {
       try {
@@ -56,9 +78,14 @@ export default class App extends Component {
     checkIfReviewTime();
   }
 
+  onAuthStateChanged(user) {
+    this.setState({user: user});
+  }
+
   render() {
     return (
       <View>
+        {this.state.loginScreen && <LoginScreen user={this.state.user} />}
         {this.state.reviewScreen && <ReviewFullScreen />}
         {this.state.fullItemId != null && (
           <FullItemScreen
@@ -66,6 +93,7 @@ export default class App extends Component {
             close={() => {
               this.setState({fullItemId: null});
             }}
+            user={this.state.user}
           />
         )}
         {this.state.menuScreen && (

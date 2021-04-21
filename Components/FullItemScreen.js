@@ -92,6 +92,7 @@ class FullItemScreen extends Component {
           userInfo={userComments}
           desc={this.state.desc}
           model={this.state.model}
+          user={this.props.user}
         />
       </Modal>
     );

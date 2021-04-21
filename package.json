@@ -12,9 +12,13 @@
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.2",
     "@react-native-community/push-notification-ios": "^1.8.0",
+    "@react-native-firebase/app": "^11.3.2",
+    "@react-native-firebase/auth": "^11.3.2",
+    "@react-native-google-signin/google-signin": "^6.0.0",
     "@react-navigation/drawer": "^5.12.4",
     "react": "16.13.1",
     "react-native": "0.63.4",
+    "react-native-fbsdk-next": "^4.0.0",
     "react-native-navigation-bar": "^0.2.1",
     "react-native-paper": "^4.7.2",
     "react-native-push-notification": "^7.2.1",
