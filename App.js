@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   View,
   Text,
+  Dimensions,
 } from 'react-native';
 
 import Banner from './Components/Banner';
@@ -20,14 +21,17 @@ import LoginScreen from './Components/LoginScreen';
 
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import CameraScanner from './Components/CameraScanner';
+import QRCodeScanner from 'react-native-qrcode-scanner';
+import {RNCamera} from 'react-native-camera';
 
 export default class App extends Component {
   state = {
     loginScreen: false,
-    menuScreen: true,
+    menuScreen: false,
     fullItemId: null,
-    dishes: null,
-    categories: null,
+    dishes: [],
+    categories: [],
     reviewScreen: false,
   };
 
@@ -82,11 +86,22 @@ export default class App extends Component {
     this.setState({user: user});
   }
 
+  onSuccess = (e) => {
+    let tmp = [];
+    for (let i = 0; i < this.state.dishes.length; i++) {
+      tmp.push(this.state.dishes[i].dish_id);
+    }
+
+    if (tmp.includes(parseInt(e.data))) {
+      this.setState({fullItemId: parseInt(e.data)});
+    } else {
+      this.scanner.reactivate();
+    }
+  };
+
   render() {
     return (
       <View>
-        {this.state.loginScreen && <LoginScreen user={this.state.user} />}
-        {this.state.reviewScreen && <ReviewFullScreen />}
         {this.state.fullItemId != null && (
           <FullItemScreen
             dishId={this.state.fullItemId}
@@ -96,6 +111,26 @@ export default class App extends Component {
             user={this.state.user}
           />
         )}
+
+        {this.state.fullItemId == null && !this.state.menuScreen && (
+          <View>
+            <QRCodeScanner
+              ref={(node) => {
+                this.scanner = node;
+              }}
+              onRead={this.onSuccess}
+              flashMode={RNCamera.Constants.FlashMode.auto}
+              showMarker={true}
+              cameraStyle={{height: Dimensions.get('window').height, zIndex: 0}}
+            />
+            <TouchableOpacity style={{position: 'absolute', top: 15, left: 15}} onPress={() => this.setState({menuScreen: true})}>
+              <Text>Menu</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+
+        {this.state.loginScreen && <LoginScreen user={this.state.user} />}
+        {this.state.reviewScreen && <ReviewFullScreen />}
         {this.state.menuScreen && (
           <View style={styles.main}>
             <Menu

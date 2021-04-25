@@ -40,7 +40,11 @@ class Menu extends Component {
 
   render() {
     return (
-      <Modal visible={this.props.open}>
+      <Modal
+        visible={this.props.open}
+        onRequestClose={() => {
+          this.props.close();
+        }}>
         <ScrollView>
           <View style={styles.topNav}>
             <TextInput
