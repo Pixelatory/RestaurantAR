@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import YoutubePlayer from 'react-native-youtube-iframe';
 import auth from '@react-native-firebase/auth';
+import FullItemLogin from './FullItemLogin';
 
 class ReviewFullScreen extends Component {
   state = {
@@ -88,7 +89,10 @@ class ReviewFullScreen extends Component {
     return (
       <View>
         <TouchableOpacity onPress={() => this.props.close()}>
-          <Image source={closeImage} style={{width: 20, height: 20, left: 5, top: 5}} />
+          <Image
+            source={closeImage}
+            style={{width: 20, height: 20, left: 5, top: 5}}
+          />
         </TouchableOpacity>
         <ScrollView>
           <View style={{paddingBottom: 15}}>
@@ -144,91 +148,96 @@ class ReviewFullScreen extends Component {
                 />
               </TouchableOpacity>
             </View>
-
-            <View style={styles.ratingStars}>
-              <TouchableOpacity
-                onPress={() => {
-                  this.setState({reviewRating: 1});
-                }}>
-                <Image
-                  style={styles.starImageStyle}
-                  source={
-                    this.state.reviewRating >= 1
-                      ? starImages.fullOrange
-                      : starImages.empty
-                  }
+            {auth().currentUser != null ? (
+              <View>
+                <View style={styles.ratingStars}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      this.setState({reviewRating: 1});
+                    }}>
+                    <Image
+                      style={styles.starImageStyle}
+                      source={
+                        this.state.reviewRating >= 1
+                          ? starImages.fullOrange
+                          : starImages.empty
+                      }
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      this.setState({reviewRating: 2});
+                    }}>
+                    <Image
+                      style={styles.starImageStyle}
+                      source={
+                        this.state.reviewRating >= 2
+                          ? starImages.fullOrange
+                          : starImages.empty
+                      }
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      this.setState({reviewRating: 3});
+                    }}>
+                    <Image
+                      style={styles.starImageStyle}
+                      source={
+                        this.state.reviewRating >= 3
+                          ? starImages.fullOrange
+                          : starImages.empty
+                      }
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      this.setState({reviewRating: 4});
+                    }}>
+                    <Image
+                      style={styles.starImageStyle}
+                      source={
+                        this.state.reviewRating >= 4
+                          ? starImages.fullOrange
+                          : starImages.empty
+                      }
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      this.setState({reviewRating: 5});
+                    }}>
+                    <Image
+                      style={styles.starImageStyle}
+                      source={
+                        this.state.reviewRating == 5
+                          ? starImages.fullOrange
+                          : starImages.empty
+                      }
+                    />
+                  </TouchableOpacity>
+                </View>
+                <TextInput
+                  maxLength={500}
+                  multiline={true}
+                  placeholder={'Leave a comment...'}
+                  onChangeText={(value) => {
+                    this.setState({reviewComment: value});
+                  }}
+                  style={{borderWidth: 1, borderRadius: 10, margin: 10}}
                 />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  this.setState({reviewRating: 2});
-                }}>
-                <Image
-                  style={styles.starImageStyle}
-                  source={
-                    this.state.reviewRating >= 2
-                      ? starImages.fullOrange
-                      : starImages.empty
-                  }
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  this.setState({reviewRating: 3});
-                }}>
-                <Image
-                  style={styles.starImageStyle}
-                  source={
-                    this.state.reviewRating >= 3
-                      ? starImages.fullOrange
-                      : starImages.empty
-                  }
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  this.setState({reviewRating: 4});
-                }}>
-                <Image
-                  style={styles.starImageStyle}
-                  source={
-                    this.state.reviewRating >= 4
-                      ? starImages.fullOrange
-                      : starImages.empty
-                  }
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  this.setState({reviewRating: 5});
-                }}>
-                <Image
-                  style={styles.starImageStyle}
-                  source={
-                    this.state.reviewRating == 5
-                      ? starImages.fullOrange
-                      : starImages.empty
-                  }
-                />
-              </TouchableOpacity>
-            </View>
-            <TextInput
-              maxLength={500}
-              multiline={true}
-              placeholder={'Leave a comment...'}
-              onChangeText={(value) => {
-                this.setState({reviewComment: value});
-              }}
-              style={{borderWidth: 1, borderRadius: 10, margin: 10}}
-            />
-            <TouchableOpacity
-              style={[styles.notiButton, styles.submitButton]}
-              color="#FF9933"
-              onPress={() => {
-                this.submitReview();
-              }}>
-              <Text style={styles.buttonText}>Submit</Text>
-            </TouchableOpacity>
+                <TouchableOpacity
+                  style={[styles.notiButton, styles.submitButton]}
+                  color="#FF9933"
+                  onPress={() => {
+                    this.submitReview();
+                  }}>
+                  <Text style={styles.buttonText}>Submit</Text>
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <FullItemLogin />
+            )}
           </View>
         </ScrollView>
       </View>
