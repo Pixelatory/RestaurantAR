@@ -62,8 +62,8 @@ class FullItemScreen extends Component {
 
     let timesRated = 0;
 
-    if (this.state.stars) {
-      timesRated = this.state.stars.reduce((a, v) => (a = a + v), 0);
+    if (this.state.reviews) {
+      timesRated = this.state.reviews.length;
     }
 
     const ratingDistribution = [0, 0, 0, 0, 0];
@@ -93,6 +93,7 @@ class FullItemScreen extends Component {
           desc={this.state.desc}
           model={this.state.model}
           user={this.props.user}
+          dishId={this.props.dishId}
         />
       </Modal>
     );

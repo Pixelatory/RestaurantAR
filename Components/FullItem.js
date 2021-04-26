@@ -68,8 +68,6 @@ const FullItem = (props) => {
     return props.model.split('v=')[1];
   }
 
-  console.log(auth().currentUser);
-
   return (
     <View style={styles.container}>
       {displayScroll && (
@@ -144,15 +142,7 @@ const FullItem = (props) => {
 
           <View style={styles.expandedRating}>
             <ProgressBar
-              progress={props.ratingDist[0]}
-              color={Colors.deepOrangeA100}
-            />
-            <ProgressBar
-              progress={props.ratingDist[1]}
-              color={Colors.deepOrangeA100}
-            />
-            <ProgressBar
-              progress={props.ratingDist[2]}
+              progress={props.ratingDist[4]}
               color={Colors.deepOrangeA100}
             />
             <ProgressBar
@@ -160,7 +150,15 @@ const FullItem = (props) => {
               color={Colors.deepOrangeA100}
             />
             <ProgressBar
-              progress={props.ratingDist[4]}
+              progress={props.ratingDist[2]}
+              color={Colors.deepOrangeA100}
+            />
+            <ProgressBar
+              progress={props.ratingDist[1]}
+              color={Colors.deepOrangeA100}
+            />
+            <ProgressBar
+              progress={props.ratingDist[0]}
               color={Colors.deepOrangeA100}
             />
           </View>
@@ -192,7 +190,11 @@ const FullItem = (props) => {
           ))}
         </View>
 
-        {props.user != null ? <FullItemReview /> : <FullItemLogin />}
+        {props.user != null ? (
+          <FullItemReview dishId={props.dishId} />
+        ) : (
+          <FullItemLogin />
+        )}
       </ScrollView>
     </View>
   );

@@ -1,14 +1,13 @@
 import React, {Component} from 'react';
 import {
-  ScrollView,
   StyleSheet,
   TouchableOpacity,
   View,
   Text,
   Dimensions,
+  Image,
 } from 'react-native';
 
-import Banner from './Components/Banner';
 import Menu from './Components/Menu';
 import FullItemScreen from './Components/FullItemScreen';
 
@@ -21,7 +20,6 @@ import LoginScreen from './Components/LoginScreen';
 
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import CameraScanner from './Components/CameraScanner';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import {RNCamera} from 'react-native-camera';
 
@@ -71,7 +69,7 @@ export default class App extends Component {
           console.log(JSON.parse(value));
           if (JSON.parse(value) < Date.now()) {
             await AsyncStorage.removeItem('reviewTime');
-            this.setState({reviewScreen: true, menuScreen: false});
+            this.setState({reviewScreen: true});
           }
         }
       } catch (e) {
@@ -100,6 +98,7 @@ export default class App extends Component {
   };
 
   render() {
+    const menuImage = require('./assets/menu.png');
     return (
       <View>
         {this.state.fullItemId != null && (
@@ -112,25 +111,38 @@ export default class App extends Component {
           />
         )}
 
-        {this.state.fullItemId == null && !this.state.menuScreen && (
-          <View>
-            <QRCodeScanner
-              ref={(node) => {
-                this.scanner = node;
-              }}
-              onRead={this.onSuccess}
-              flashMode={RNCamera.Constants.FlashMode.auto}
-              showMarker={true}
-              cameraStyle={{height: Dimensions.get('window').height, zIndex: 0}}
-            />
-            <TouchableOpacity style={{position: 'absolute', top: 15, left: 15}} onPress={() => this.setState({menuScreen: true})}>
-              <Text>Menu</Text>
-            </TouchableOpacity>
-          </View>
-        )}
+        {this.state.fullItemId == null &&
+          !this.state.menuScreen &&
+          !this.state.reviewScreen && (
+            <View>
+              <QRCodeScanner
+                ref={(node) => {
+                  this.scanner = node;
+                }}
+                onRead={this.onSuccess}
+                flashMode={RNCamera.Constants.FlashMode.auto}
+                showMarker={true}
+                cameraStyle={{
+                  height: Dimensions.get('window').height,
+                  zIndex: 0,
+                }}
+              />
+              <TouchableOpacity
+                style={{position: 'absolute', top: 15, left: 15, padding: 10, backgroundColor:'#FFFFFF33'}}
+                onPress={() => this.setState({menuScreen: true})}>
+                <Image source={menuImage} style={{height: 25, width: 25}} />
+              </TouchableOpacity>
+            </View>
+          )}
 
         {this.state.loginScreen && <LoginScreen user={this.state.user} />}
-        {this.state.reviewScreen && <ReviewFullScreen />}
+        {this.state.reviewScreen && (
+          <ReviewFullScreen
+            close={() => {
+              this.setState({reviewScreen: false});
+            }}
+          />
+        )}
         {this.state.menuScreen && (
           <View style={styles.main}>
             <Menu
@@ -140,7 +152,6 @@ export default class App extends Component {
               categories={this.state.categories}
               fullItem={(num) => this.setState({fullItemId: num})}
             />
-            <Banner title="TAP DISH TO VIEW 3D MODEL" />
           </View>
         )}
       </View>
@@ -161,7 +172,6 @@ PushNotification.createChannel(
   (created) => console.log(`createChannel returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
 );
 
-// START OF PUSH NOTIF
 PushNotification.configure({
   onRegister: function (token) {
     console.log('TOKEN:', token);
@@ -186,4 +196,3 @@ PushNotification.configure({
   requestPermissions: Platform.OS === 'ios', // DO NOT REMOVE THIS LINE, ITS REQUIRED IF FIREBASE IS NOT USED
   // requestPermissions: true,                // Use if using Firebase (For Remote Notifications)
 });
-// END OF PUSH NOTIF
