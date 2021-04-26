@@ -128,7 +128,13 @@ export default class App extends Component {
                 }}
               />
               <TouchableOpacity
-                style={{position: 'absolute', top: 15, left: 15, padding: 10, backgroundColor:'#FFFFFF33'}}
+                style={{
+                  position: 'absolute',
+                  top: 15,
+                  left: 15,
+                  padding: 10,
+                  backgroundColor: '#FFFFFF33',
+                }}
                 onPress={() => this.setState({menuScreen: true})}>
                 <Image source={menuImage} style={{height: 25, width: 25}} />
               </TouchableOpacity>
