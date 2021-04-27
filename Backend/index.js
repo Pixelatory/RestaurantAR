@@ -1,3 +1,5 @@
+const moment = require('moment');
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
@@ -5,8 +7,9 @@ const mysql = require('mysql');
 const fs = require('fs');
 const path = require('path');
 const admin = require('firebase-admin');
-var adminApp = admin.initializeApp({
-  credential: admin.credential.applicationDefault()
+var serviceAccount = require('./key/restaurantar-70057-firebase-adminsdk-j510z-c5380f8b99.json');
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
 });
  
 // parse application/json
@@ -27,20 +30,6 @@ conn.connect((err) =>{
   console.log('Mysql Connected...');
 });
 
-//testing verification
-app.get('/api/verificationTest',(req, res) => {
-  admin
-  .auth()
-  .verifyIdToken(req.query.id)
-  .then((decodedToken) => {
-    res.send(decodedToken.uid);
-    // ...
-  }).catch((error) => {
-    // Handle error
-    res.send(error);
-  });
-});
-
 // add new review
 app.post('/api/reviews', (req, res) => {
   // First authenticate
@@ -50,56 +39,54 @@ app.post('/api/reviews', (req, res) => {
   .then((decodedToken) => {
     // Authentication complete, check Users table for entry
     let sql1 = "SELECT * FROM Users WHERE uid='" + decodedToken.uid+"'";
-    let query1 = conn.query(sql1, (err, results) => {
+    conn.query(sql1, function(err, results) {
       if(err) throw err;
       // Users does not have this uid, so add it for review foreign key constraint
-      let userId = 0;
+      let userId = null;  
       if (results.length == 0) {
         let data3 = [[req.body.user_full_name, decodedToken.uid]];
         let sql3 = "INSERT INTO Users (user_full_name, uid) VALUES ?";
-        userId = conn.query(sql3, [data3], (err3, results3) => {
+        conn.query(sql3, data3, function(err3, results3) {
           if(err3) throw err3;
-          return results3.insertId;
+          userId = results3.insertId;
         });
-      } else if (results.length == 1) { // Users has this uid
+      } else { // Users has this uid
         userId = results[0].user_id;
       }
-
-      if (results.length == 1 || results.length == 0) {
-        let needsUpdate = conn.query("SELECT * FROM Reviews WHERE user_id="+userId+" AND dish_id="+req.body.dish_id, (err4, results4) => {
+    
+      if (userId != null) {
+        let data4 = [userId, req.body.dish_id];
+        conn.query('SELECT * FROM Reviews WHERE user_id=? AND dish_id=?', data4, (err4, results4) => {
           if(err4) throw err4;
-          if(results4.length == 1) {
-            return true;
+          console.log(results4);
+          if(results4.length == 0) {
+            let data5 = [[userId,
+                          Number(req.body.dish_id),
+                          moment().format("YYYY-MM-DD"),
+                          req.body.review_rating,
+                          req.body.review_comment]];
+            let sql5 = "INSERT INTO Reviews (user_id,dish_id,review_date,review_rating,review_comment) VALUES ?";
+            let query5 = conn.query(sql5, [data5], (err5, results5) => {
+              if(err5) throw err5;
+              res.send(JSON.stringify({"status": 200, "error": null, "response": results5}));
+            });
+          } else {
+            let data6 = [moment().format("YYYY-MM-DD"),
+                         req.body.review_rating,
+                         req.body.review_comment,
+                         userId,
+                         Number(req.body.dish_id)];
+            let sql6 = "UPDATE Reviews SET review_date=?, review_rating=?, review_comment=? WHERE user_id=? AND dish_id=?";
+            conn.query(sql6, data6, (err6, results6) => {
+              if(err6) throw err6;
+              res.send(JSON.stringify({"status": 200, "error": null, "response": results6}));
+            });
           }
-          return false;
         });
-        
-        if (needsUpdate == false) {
-          let data5 = [[userId,
-                        req.body.dish_id, 
-                        req.body.review_date, 
-                        req.body.review_rating, 
-                        req.body.review_comment]];
-          let sql5 = "INSERT INTO Reviews (user_id,dish_id,review_date,review_rating,review_comment) VALUES ?";
-          let query5 = conn.query(sql5, [data5], (err5, results5) => {
-            if(err5) throw err5;
-            res.send(JSON.stringify({"status": 200, "error": null, "response": results5}));
-          });
-        } else {
-          let data6 = [req.body.review_date,
-                       Number(req.body.review_rating),
-                       req.body.review_comment,
-                       userId,
-                       Number(req.body.dish_id)];
-          let sql6 = "UPDATE Reviews SET review_date=?, review_rating=?, review_comment=? WHERE user_id=? AND dish_id=?";
-          conn.query(sql6, data6, (err6, results6) => {
-            if(err6) throw err6;
-            res.send(JSON.stringify({"status": 200, "error": null, "response": results6}));
-          });
-        }
       }
-    });
+  });
   }).catch((error) => {
+    console.log(error);
     res.send(error);
   });
 });
@@ -142,7 +129,7 @@ app.get('/api/reviews/:id', (req, res) => {
     if(err) throw err;
     resp = results;
     
-    for(let i=0; i < 5; i++) {
+    for(let i=1; i < 6; i++) {
       let sql2 = "SELECT COUNT(*) AS c FROM Reviews WHERE dish_id="+req.params.id+" AND review_rating='"+i+"'";
       conn.query(sql2, (err, results) => {
         if(err) throw err;
@@ -199,35 +186,7 @@ app.get('/api/users/:id',(req, res) => {
     res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
   });
 });
- 
-//add new product
-app.post('/api/products',(req, res) => {
-  let data = {product_name: req.body.product_name, product_price: req.body.product_price};
-  let sql = "INSERT INTO product SET ?";
-  let query = conn.query(sql, data,(err, results) => {
-    if(err) throw err;
-    res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
-  });
-});
- 
-//update product
-app.put('/api/products/:id',(req, res) => {
-  let sql = "UPDATE product SET product_name='"+req.body.product_name+"', product_price='"+req.body.product_price+"' WHERE product_id="+req.params.id;
-  let query = conn.query(sql, (err, results) => {
-    if(err) throw err;
-    res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
-  });
-});
- 
-//Delete product
-app.delete('/api/products/:id',(req, res) => {
-  let sql = "DELETE FROM product WHERE product_id="+req.params.id+"";
-  let query = conn.query(sql, (err, results) => {
-    if(err) throw err;
-      res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
-  });
-});
- 
+
 //Server listening
 app.listen(57812,() =>{
   console.log('Server started on port 3000...');

@@ -115,6 +115,7 @@ const FullItemReview = (props) => {
         multiline={true}
         style={{borderWidth: 1, borderRadius: 10, margin: 10}}
         onChangeText={(value) => setReviewComment(value)}
+        placeholder={'Leave a comment...'}
         value={reviewComment}
       />
       <TouchableOpacity
